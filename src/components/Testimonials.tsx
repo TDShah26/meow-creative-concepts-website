@@ -29,7 +29,7 @@ export default function Testimonials() {
                         >
                             <div className="text-4xl text-emerald-200/20 font-serif absolute top-4 left-6">"</div>
                             <p className="text-white/85 italic leading-relaxed relative z-10 mb-6 font-light">
-                                Simply amazing! The attention to detail in every hamper is just outstanding.
+                                Simply amazing test! The attention to detail in every hamper is just outstanding.
                                 Meow Creative Concepts truly brings a magical touch to gifting.
                             </p>
                             <div className="flex items-center gap-4">

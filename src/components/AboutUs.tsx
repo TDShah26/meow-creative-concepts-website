@@ -7,7 +7,7 @@ export default function AboutUs() {
     return (
         <section id="about" className="relative py-24 px-6 md:px-12 bg-[#0f0f0f] overflow-hidden">
             {/* Decorative gradient blur */}
-            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-emerald-900/15 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
+            <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-amber-900/15 rounded-full blur-[120px] -translate-y-1/2 pointer-events-none" />
             <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-teal-900/15 rounded-full blur-[100px] translate-y-1/3 pointer-events-none" />
 
             <div className="max-w-6xl mx-auto relative z-10">
@@ -19,8 +19,8 @@ export default function AboutUs() {
                     className="text-center mb-16"
                 >
                     <h2 className="text-4xl md:text-6xl font-light mb-6 leading-tight">
-                        Hi, we’re <span className="font-serif italic text-emerald-200">Shivani</span> and{" "}
-                        <span className="font-serif italic text-emerald-200">Neepa</span>,
+                        Hi, we’re <span className="font-serif italic text-amber-200">Shivani</span> and{" "}
+                        <span className="font-serif italic text-amber-200">Neepa</span>,
                     </h2>
 
                     <h3 className="text-xl md:text-2xl text-white/80 font-light max-w-3xl mx-auto">
@@ -35,7 +35,7 @@ export default function AboutUs() {
                         whileInView={{ opacity: 1, scale: 1 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.8 }}
-                        className="relative aspect-square w-full md:max-w-sm mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-emerald-900/20 group"
+                        className="relative aspect-square w-full md:max-w-sm mx-auto rounded-2xl overflow-hidden shadow-2xl shadow-amber-900/20 group"
                     >
                         <div className="absolute inset-0 bg-neutral-800 animate-pulse z-0" /> {/* Loading state placeholder */}
                         <Image

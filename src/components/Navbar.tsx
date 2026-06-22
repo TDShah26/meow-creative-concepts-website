@@ -1,14 +1,17 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { useMoodboard } from "@/context/MoodboardContext";
 
 export default function Navbar() {
+    const { isDrawerOpen } = useMoodboard();
+
     return (
         <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-start px-6 md:px-12 pointer-events-none">
             {/* Left Pill: Brand Name */}
             <motion.div
                 initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                animate={{ y: 0, opacity: isDrawerOpen ? 0 : 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                 className="pointer-events-auto px-6 py-3 
                            bg-white/5 backdrop-blur-2xl saturate-150
@@ -26,7 +29,7 @@ export default function Navbar() {
             {/* Right Pill: Navigation */}
             <motion.div
                 initial={{ y: -100, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
+                animate={{ y: 0, opacity: isDrawerOpen ? 0 : 1 }}
                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                 className="pointer-events-auto px-6 py-3 
                            bg-white/5 backdrop-blur-2xl saturate-150

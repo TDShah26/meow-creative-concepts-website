@@ -5,11 +5,11 @@ import { motion } from "framer-motion";
 export default function Gallery() {
     const projects = [
         { id: 1, color: "bg-rose-900/20" },
-        { id: 2, color: "bg-emerald-900/20" },
+        { id: 2, color: "bg-amber-900/20" },
         { id: 3, color: "bg-indigo-900/20" },
         { id: 4, color: "bg-blue-900/20" },
         { id: 5, color: "bg-teal-900/20" },
-        { id: 6, color: "bg-emerald-950/20" },
+        { id: 6, color: "bg-amber-950/20" },
     ];
 
     return (
@@ -21,9 +21,9 @@ export default function Gallery() {
                     viewport={{ once: true }}
                     className="text-3xl md:text-5xl font-light mb-4"
                 >
-                    What we have <span className="font-serif italic font-normal text-emerald-200">created</span> so far
+                    What we have <span className="font-serif italic font-normal text-amber-200">created</span> so far
                 </motion.h2>
-                <div className="h-px w-24 bg-gradient-to-r from-emerald-500 to-transparent mx-auto md:mx-0" />
+                <div className="h-px w-24 bg-gradient-to-r from-amber-500 to-transparent mx-auto md:mx-0" />
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">

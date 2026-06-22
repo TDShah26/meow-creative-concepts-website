@@ -3,31 +3,55 @@
 import { motion, AnimatePresence, useMotionValue, useMotionValueEvent, useTransform } from "framer-motion";
 import { useEffect, useRef, useState, useCallback } from "react";
 
+// Module-level flag: survives client-side navigations but resets on full page reload
+let hasCompletedIntro = false;
+let cachedImages: HTMLImageElement[] | null = null;
+
 export default function GiftScroll() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const contextRef = useRef<CanvasRenderingContext2D | null>(null);
     const containerRef = useRef<HTMLDivElement>(null);
-    const [images, setImages] = useState<HTMLImageElement[]>([]);
+    // Use ref for images to avoid re-renders on every batch load
+    const imagesRef = useRef<HTMLImageElement[]>([]);
     const [isLoaded, setIsLoaded] = useState(false);
     const [loadingProgress, setLoadingProgress] = useState(0);
 
     // Direct Frame Tracking (No Spring = Zero Lag)
-    const totalFrames = 144;
+    // We only load every 2nd frame (72 frames) but keep the scroll range mapped to the same feel
+    const totalSourceFrames = 144;
+    const frameStep = 2; // Load every 2nd frame
+    const totalFrames = Math.ceil(totalSourceFrames / frameStep); // 72 frames
     const scrollProgress = useMotionValue(0);
 
     const [isLocked, setIsLocked] = useState(true);
 
-    // Load images - Optimized Batched Loading with Progressive Updates
+    // Skip intro if already completed during this page session (client-side nav back)
     useEffect(() => {
+        if (hasCompletedIntro && cachedImages) {
+            imagesRef.current = cachedImages;
+            setIsLoaded(true);
+            setLoadingProgress(100);
+            setIsLocked(false);
+            scrollProgress.set(totalFrames - 1);
+        }
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Load images - Optimized: every 2nd frame, ref-based storage, faster unblock
+    useEffect(() => {
+        // Skip loading if we already have cached images
+        if (cachedImages) return;
+
         const loadImages = async () => {
-            const BATCH_SIZE = 36;
+            const BATCH_SIZE = 18; // 18 frames per batch (covers ~25% in 1 batch)
             const loadedImages: HTMLImageElement[] = new Array(totalFrames).fill(null);
             let loadedCount = 0;
 
-            const loadImage = (index: number) => {
+            const loadImage = (frameIndex: number) => {
                 return new Promise<HTMLImageElement>((resolve) => {
                     const img = new Image();
-                    const frameNumber = (index + 1).toString().padStart(3, "0");
+                    // Map frame index back to source frame (every 2nd frame)
+                    const sourceFrame = (frameIndex * frameStep) + 1;
+                    const frameNumber = sourceFrame.toString().padStart(3, "0");
                     img.src = `/images-optimized/ezgif-frame-${frameNumber}.webp`;
 
                     const onFinish = () => {
@@ -41,7 +65,7 @@ export default function GiftScroll() {
                         .catch(() => {
                             img.onload = onFinish;
                             img.onerror = () => {
-                                console.error(`Failed to load frame ${index + 1}`);
+                                console.error(`Failed to load frame ${sourceFrame}`);
                                 onFinish();
                             };
                             if (img.complete) onFinish();
@@ -59,21 +83,25 @@ export default function GiftScroll() {
                     loadedImages[i + batchIndex] = img;
                 });
 
-                // Update images state after each batch to enable progressive loading
-                setImages([...loadedImages]);
+                // Update ref (no re-render) and trigger a single draw
+                imagesRef.current = [...loadedImages];
             }
+
+            // Cache the fully loaded images at module level
+            cachedImages = loadedImages;
         };
 
         loadImages();
-    }, []);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    // Set isLoaded to true when 25% of frames are loaded
+    // Unblock the loading screen after 25% of frames are loaded (ensures first frames are ready)
     useEffect(() => {
-        if (loadingProgress >= 25 && images.length > 0) {
-            console.log(`Setting isLoaded=true at ${loadingProgress}% (${images.length} images loaded)`);
+        if (loadingProgress >= 25 && !isLoaded) {
             setIsLoaded(true);
+            // Mark intro as completed for client-side navigations
+            hasCompletedIntro = true;
         }
-    }, [loadingProgress, images]);
+    }, [loadingProgress, isLoaded]);
 
     // Virtual Scroll / Lock Logic
     useEffect(() => {
@@ -111,9 +139,10 @@ export default function GiftScroll() {
         }
     }, [isLocked]);
 
-    // Optimized Drawing Function
+    // Optimized Drawing Function - reads from ref (no re-render dependency)
     const drawFrame = useCallback((frameFloat: number) => {
         const canvas = canvasRef.current;
+        const images = imagesRef.current;
         if (!canvas || images.length === 0) return;
 
         if (!contextRef.current) {
@@ -155,7 +184,7 @@ export default function GiftScroll() {
             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
             ctx.drawImage(img, offsetX, offsetY, drawWidth, drawHeight);
         }
-    }, [images]);
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Use Motion Value Event for direct canvas updates
     useMotionValueEvent(scrollProgress, "change", (latest) => {
@@ -176,12 +205,13 @@ export default function GiftScroll() {
         return () => window.removeEventListener("resize", handleResize);
     }, [drawFrame, scrollProgress]);
 
-    // Draw first frame when images are loaded
+    // Draw initial frame when loading completes
     useEffect(() => {
-        if (images.length > 0 && canvasRef.current) {
-            drawFrame(0);
+        if (isLoaded && canvasRef.current) {
+            drawFrame(scrollProgress.get());
         }
-    }, [images, drawFrame]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [isLoaded, drawFrame]);
 
     // Transformation Values for Text
     const progressVal = useTransform(scrollProgress, [0, totalFrames - 1], [0, 1]);

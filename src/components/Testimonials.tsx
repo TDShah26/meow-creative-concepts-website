@@ -13,7 +13,7 @@ export default function Testimonials() {
                         viewport={{ once: true }}
                         className="text-3xl md:text-5xl font-light"
                     >
-                        Client <span className="font-serif italic font-normal text-emerald-200">love</span> we have received so far
+                        Client <span className="font-serif italic font-normal text-amber-200">love</span> we have received so far
                     </motion.h2>
                 </div>
 
@@ -27,13 +27,13 @@ export default function Testimonials() {
                             transition={{ delay: i * 0.2 }}
                             className="p-8 rounded-2xl bg-white/8 border border-white/10 backdrop-blur-sm relative"
                         >
-                            <div className="text-4xl text-emerald-200/20 font-serif absolute top-4 left-6">"</div>
+                            <div className="text-4xl text-amber-200/20 font-serif absolute top-4 left-6">"</div>
                             <p className="text-white/85 italic leading-relaxed relative z-10 mb-6 font-light">
                                 Simply amazing test! The attention to detail in every hamper is just outstanding.
                                 Meow Creative Concepts truly brings a magical touch to gifting.
                             </p>
                             <div className="flex items-center gap-4">
-                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-emerald-400 to-teal-400" />
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-amber-400 to-orange-400" />
                                 <div>
                                     <h4 className="text-sm font-medium">Happy Client</h4>
                                     <span className="text-xs text-white/40">CEO, Company</span>

@@ -103,12 +103,13 @@ export default function GiftScroll() {
         }
     }, [loadingProgress, isLoaded]);
 
-    // Virtual Scroll / Lock Logic
+    // Virtual Scroll / Lock Logic (wheel + touch)
     useEffect(() => {
         if (!isLocked) return;
 
         document.body.style.overflow = "hidden";
 
+        // --- Desktop: wheel events ---
         const handleWheel = (e: WheelEvent) => {
             if (!isLocked) return;
 
@@ -125,10 +126,56 @@ export default function GiftScroll() {
             scrollProgress.set(Math.max(0, Math.min(next, totalFrames - 1)));
         };
 
+        // --- Mobile: touch events ---
+        let touchStartY = 0;
+        let lastTouchY = 0;
+
+        const handleTouchStart = (e: TouchEvent) => {
+            touchStartY = e.touches[0].clientY;
+            lastTouchY = e.touches[0].clientY;
+        };
+
+        const handleTouchMove = (e: TouchEvent) => {
+            if (!isLocked) return;
+            // Prevent native scroll while the animation is locked
+            e.preventDefault();
+
+            const currentY = e.touches[0].clientY;
+            const deltaY = lastTouchY - currentY; // positive = swipe up (scroll down)
+            lastTouchY = currentY;
+
+            const sensitivity = 0.6; // slightly higher than wheel for better touch feel
+            const current = scrollProgress.get();
+            const next = current + (deltaY * sensitivity);
+
+            if (current >= totalFrames - 1 && deltaY > 0) {
+                setIsLocked(false);
+                scrollProgress.set(totalFrames - 1);
+                return;
+            }
+
+            // Allow swiping back to the start
+            if (current <= 0 && deltaY < 0) return;
+
+            scrollProgress.set(Math.max(0, Math.min(next, totalFrames - 1)));
+        };
+
+        const handleTouchEnd = () => {
+            touchStartY = 0;
+            lastTouchY = 0;
+        };
+
         window.addEventListener("wheel", handleWheel, { passive: true });
+        window.addEventListener("touchstart", handleTouchStart, { passive: true });
+        // touchmove must be non-passive so we can call preventDefault
+        window.addEventListener("touchmove", handleTouchMove, { passive: false });
+        window.addEventListener("touchend", handleTouchEnd, { passive: true });
 
         return () => {
             window.removeEventListener("wheel", handleWheel);
+            window.removeEventListener("touchstart", handleTouchStart);
+            window.removeEventListener("touchmove", handleTouchMove);
+            window.removeEventListener("touchend", handleTouchEnd);
             document.body.style.overflow = "";
         };
     }, [isLocked, scrollProgress]);
@@ -172,10 +219,12 @@ export default function GiftScroll() {
             }
 
             // Dynamic Layout Shift: Start centered, shift right as it opens
+            // On mobile (narrow screens) use a smaller shift so the gift stays centered
             const progress = index / totalFrames;
             const shiftFactor = Math.min(progress * 1.66, 1);
             const easeShift = 1 - Math.pow(1 - shiftFactor, 3);
-            const horizontalShift = (canvasWidth * 0.15) * easeShift;
+            const shiftAmount = canvasWidth < 768 ? 0.05 : 0.15;
+            const horizontalShift = (canvasWidth * shiftAmount) * easeShift;
 
             offsetX = (canvasWidth - drawWidth) / 2 + horizontalShift;
             offsetY = (canvasHeight - drawHeight) / 2 + 50;
@@ -264,13 +313,13 @@ export default function GiftScroll() {
                 <div className="max-w-4xl w-full">
                     <motion.h2
                         style={{ opacity: titleOpacity, y: titleY }}
-                        className="text-white/40 font-medium tracking-widest uppercase mb-4 text-sm md:text-base"
+                        className="text-white/40 font-medium tracking-widest uppercase mb-4 text-xs sm:text-sm md:text-base"
                     >
                         The Art of Gifting
                     </motion.h2>
                     <motion.h1
                         style={{ opacity: subOpacity, y: subY }}
-                        className="text-5xl md:text-8xl font-light text-white tracking-tighter leading-none"
+                        className="text-3xl sm:text-5xl md:text-8xl font-light text-white tracking-tighter leading-none"
                     >
                         Curated.<br />
                         Customized.<br />

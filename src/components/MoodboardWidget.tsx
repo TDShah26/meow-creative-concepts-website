@@ -36,7 +36,7 @@ export default function MoodboardWidget() {
                         initial={{ y: 100, opacity: 0 }}
                         animate={{ y: 0, opacity: 1 }}
                         exit={{ y: 100, opacity: 0 }}
-                        className="fixed bottom-6 right-6 z-50 pointer-events-auto"
+                        className="fixed bottom-20 sm:bottom-6 right-4 sm:right-6 z-50 pointer-events-auto"
                     >
                         <div className="flex items-center gap-1 bg-white text-black pl-2 pr-2 py-2 rounded-full shadow-[0_10px_40px_-10px_rgba(255,255,255,0.3)] hover:scale-105 transition-transform duration-300">
                             {/* Main Click Area (Open Drawer) */}
@@ -95,7 +95,7 @@ export default function MoodboardWidget() {
                             animate={{ x: 0 }}
                             exit={{ x: "100%" }}
                             transition={{ type: "spring", damping: 25, stiffness: 200 }}
-                            className="fixed inset-y-0 right-0 w-full max-w-md bg-[#0f0f0f] border-l border-white/10 shadow-2xl z-50 flex flex-col"
+                            className="fixed inset-y-0 right-0 w-full sm:max-w-md bg-[#0f0f0f] border-l border-white/10 shadow-2xl z-50 flex flex-col"
                         >
                             {/* Drawer Header */}
                             <div className="p-6 border-b border-white/10 flex justify-between items-center bg-[#0f0f0f]">

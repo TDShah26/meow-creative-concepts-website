@@ -204,18 +204,18 @@ function BeforeAfterSlider({ story }: { story: typeof stories[0] }) {
                 style={{ clipPath: "polygon(0 0, var(--split) 0, var(--split) 100%, 0 100%)" }}
             >
                 {/* Content of the "Before" side */}
-                <div className="relative w-full h-full flex items-center justify-center bg-black/20">
-                    <div className="max-w-md p-8 md:p-12 relative">
+                <div className="relative w-full h-full flex items-center justify-center bg-black/20 overflow-hidden">
+                    <div className="max-w-xs sm:max-w-md p-5 sm:p-8 md:p-12 relative">
                         {/* Decorative 'WhatsApp' style bubble */}
-                        <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl rounded-tl-none p-6 transform -rotate-2">
+                        <div className="bg-white/10 backdrop-blur-md border border-white/10 rounded-2xl rounded-tl-none p-4 sm:p-6 sm:-rotate-2">
                             <p className="text-xs text-amber-400 mb-2 font-mono">Incoming Request...</p>
-                            <p className="text-white/90 font-light text-lg leading-relaxed">
+                            <p className="text-white/90 font-light text-sm sm:text-lg leading-relaxed">
                                 "{story.clientBrief.text}"
                             </p>
                         </div>
 
                         {/* Tags */}
-                        <div className="flex flex-wrap gap-2 mt-6 justify-center">
+                        <div className="flex flex-wrap gap-2 mt-4 sm:mt-6 justify-center">
                             {story.clientBrief.tags.map(tag => (
                                 <span key={tag} className="px-3 py-1 bg-black/30 border border-white/5 rounded-full text-xs text-white/50 uppercase tracking-wide">
                                     {tag}
@@ -223,7 +223,7 @@ function BeforeAfterSlider({ story }: { story: typeof stories[0] }) {
                             ))}
                         </div>
 
-                        <div className="absolute -top-10 -left-10 text-6xl text-white/5 font-serif font-bold pointer-events-none">
+                        <div className="absolute -top-8 -left-6 text-4xl sm:text-6xl text-white/5 font-serif font-bold pointer-events-none">
                             BRIEF
                         </div>
                     </div>

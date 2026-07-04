@@ -40,7 +40,7 @@ export default function Navbar() {
 
     return (
         <>
-            <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-start px-6 md:px-12 pointer-events-none">
+            <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 pointer-events-none">
                 {/* Left Pill: Brand Name */}
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}

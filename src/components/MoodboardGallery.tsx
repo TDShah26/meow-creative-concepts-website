@@ -37,7 +37,7 @@ export default function MoodboardGallery() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.15 }}
-                                className="group relative aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[#0f0f0f] border border-white/5 hover:border-white/20 transition-colors duration-500"
+                                className="group relative aspect-[3/4] sm:aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[#0f0f0f] border border-white/5 hover:border-white/20 transition-colors duration-500"
                             >
                                 {/* Background Image */}
                                 <img
@@ -57,7 +57,7 @@ export default function MoodboardGallery() {
                                     <p className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                                         Explore
                                     </p>
-                                    <h3 className="text-3xl md:text-4xl font-serif text-white mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                                    <h3 className="text-2xl md:text-4xl font-serif text-white mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
                                         {cat.name}
                                     </h3>
                                     <p className="text-sm text-white/50 mb-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-100">

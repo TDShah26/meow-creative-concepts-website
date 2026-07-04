@@ -227,7 +227,7 @@ export default function GiftScroll() {
             const horizontalShift = (canvasWidth * shiftAmount) * easeShift;
 
             offsetX = (canvasWidth - drawWidth) / 2 + horizontalShift;
-            offsetY = (canvasHeight - drawHeight) / 2 + 50;
+            offsetY = (canvasHeight - drawHeight) / 2 + (canvasWidth < 768 ? 120 : 50);
 
             ctx.fillStyle = "#000000";
             ctx.fillRect(0, 0, canvasWidth, canvasHeight);
@@ -309,17 +309,18 @@ export default function GiftScroll() {
                 className="absolute inset-0 w-full h-full"
             />
 
-            <div className="absolute inset-0 pointer-events-none flex flex-col justify-center px-6 md:px-24 pt-32">
+            {/* Responsive Text Overlay (Left-aligned, elegant editorial design) */}
+            <div className="absolute inset-0 pointer-events-none flex flex-col justify-start md:justify-center px-8 md:px-24 pt-32 md:pt-16">
                 <div className="max-w-4xl w-full">
                     <motion.h2
                         style={{ opacity: titleOpacity, y: titleY }}
-                        className="text-white/40 font-medium tracking-widest uppercase mb-4 text-xs sm:text-sm md:text-base"
+                        className="text-white/40 font-medium tracking-widest uppercase mb-3 md:mb-4 text-xs sm:text-sm md:text-base"
                     >
                         The Art of Gifting
                     </motion.h2>
                     <motion.h1
                         style={{ opacity: subOpacity, y: subY }}
-                        className="text-3xl sm:text-5xl md:text-8xl font-light text-white tracking-tighter leading-none"
+                        className="text-[2.5rem] sm:text-5xl md:text-8xl font-light text-white tracking-tighter leading-[1.1] md:leading-none"
                     >
                         Curated.<br />
                         Customized.<br />

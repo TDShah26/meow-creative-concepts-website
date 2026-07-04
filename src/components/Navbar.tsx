@@ -2,11 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useMoodboard } from "@/context/MoodboardContext";
 
 export default function Navbar() {
-    const { isDrawerOpen } = useMoodboard();
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [showCopied, setShowCopied] = useState(false);
 
     // Lock body scroll when mobile menu is open
     useEffect(() => {
@@ -38,13 +37,37 @@ export default function Navbar() {
         }, 300);
     };
 
+    const handleShare = async () => {
+        const shareData = {
+            title: 'Meow Creative Concepts',
+            text: 'Check out Meow Creative Concepts — curated handcrafted gifting!',
+            url: 'https://www.meowcreativeconcepts.com',
+        };
+
+        if (navigator.share) {
+            try {
+                await navigator.share(shareData);
+            } catch (err) {
+                // user cancelled or error
+            }
+        } else {
+            try {
+                await navigator.clipboard.writeText(shareData.url);
+                setShowCopied(true);
+                setTimeout(() => setShowCopied(false), 2000);
+            } catch (err) {
+                console.error('Failed to copy text: ', err);
+            }
+        }
+    };
+
     return (
         <>
-            <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-center px-6 md:px-12 pointer-events-none">
+            <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-start px-6 md:px-12 pointer-events-none">
                 {/* Left Pill: Brand Name */}
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: isDrawerOpen ? 0 : 1 }}
+                    animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                     className="pointer-events-auto px-6 py-3 
                                bg-white/5 backdrop-blur-2xl saturate-150
@@ -62,7 +85,7 @@ export default function Navbar() {
                 {/* Right Pill: Navigation */}
                 <motion.div
                     initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: isDrawerOpen ? 0 : 1 }}
+                    animate={{ y: 0, opacity: 1 }}
                     transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
                     className="pointer-events-auto px-6 py-3 
                                bg-white/5 backdrop-blur-2xl saturate-150
@@ -73,8 +96,8 @@ export default function Navbar() {
                 >
                     <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
 
-                    {/* Desktop Links */}
-                    <div className="relative z-10 hidden md:flex gap-8 text-xs md:text-sm font-medium tracking-wide">
+                    {/* Desktop Links & Share */}
+                    <div className="relative z-10 hidden md:flex items-center gap-8 text-xs md:text-sm font-medium tracking-wide">
                         {navLinks.map((item) => (
                             <a
                                 key={item.label}
@@ -84,6 +107,25 @@ export default function Navbar() {
                                 {item.label}
                             </a>
                         ))}
+                        
+                        {/* Share Button (Desktop) */}
+                        <button
+                            onClick={handleShare}
+                            className="relative text-white/70 hover:text-white transition-colors duration-300 flex items-center justify-center cursor-pointer border-l border-white/25 pl-4"
+                            title={showCopied ? "Link Copied!" : "Share Website"}
+                        >
+                            {showCopied ? (
+                                <span className="text-xs text-amber-400 font-medium animate-pulse">Copied!</span>
+                            ) : (
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="opacity-80 hover:opacity-100 transition-opacity">
+                                    <circle cx="18" cy="5" r="3" />
+                                    <circle cx="6" cy="12" r="3" />
+                                    <circle cx="18" cy="19" r="3" />
+                                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                </svg>
+                            )}
+                        </button>
                     </div>
 
                     {/* Mobile Hamburger Button */}
@@ -168,6 +210,27 @@ export default function Navbar() {
                                         </span>
                                     </motion.button>
                                 ))}
+
+                                {/* Share Link in Mobile Menu */}
+                                <motion.button
+                                    initial={{ opacity: 0, x: -40 }}
+                                    animate={{ opacity: 1, x: 0 }}
+                                    exit={{ opacity: 0, x: -40 }}
+                                    transition={{ delay: 0.15 + navLinks.length * 0.08, duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                                    onClick={handleShare}
+                                    className="group text-left py-4 border-b border-white/10 last:border-none w-full"
+                                >
+                                    <span className="text-4xl font-light text-white/60 group-hover:text-white transition-colors duration-300 tracking-tight flex items-center gap-3">
+                                        {showCopied ? "Link Copied!" : "Share Website"}
+                                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-amber-400">
+                                            <circle cx="18" cy="5" r="3" />
+                                            <circle cx="6" cy="12" r="3" />
+                                            <circle cx="18" cy="19" r="3" />
+                                            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49" />
+                                            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49" />
+                                        </svg>
+                                    </span>
+                                </motion.button>
                             </div>
 
                             {/* Footer of menu */}

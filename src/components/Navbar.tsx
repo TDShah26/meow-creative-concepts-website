@@ -64,23 +64,46 @@ export default function Navbar() {
     return (
         <>
             <div className="fixed top-6 left-0 w-full z-50 flex justify-between items-start px-6 md:px-12 pointer-events-none">
-                {/* Left Pill: Brand Name */}
-                <motion.div
-                    initial={{ y: -100, opacity: 0 }}
-                    animate={{ y: 0, opacity: 1 }}
-                    transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                    className="pointer-events-auto px-6 py-3 
-                               bg-white/5 backdrop-blur-2xl saturate-150
-                               border border-white/10
-                               rounded-full
-                               shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]
-                               text-white relative group overflow-hidden"
-                >
-                    <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
-                    <div className="relative z-10 text-sm md:text-base font-bold tracking-widest uppercase bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
-                        Meow Creative Concepts
-                    </div>
-                </motion.div>
+                {/* Left Pill: Brand Name + Logo */}
+                <div className="flex items-center gap-3 pointer-events-auto">
+                    {/* Logo Pill */}
+                    <motion.div
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+                        className="w-11 h-11 md:w-12 md:h-12 
+                                   bg-white/5 backdrop-blur-2xl saturate-150
+                                   border border-white/10
+                                   rounded-full
+                                   shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]
+                                   flex items-center justify-center relative overflow-hidden group cursor-pointer"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
+                        <img 
+                            src="/meow_logo.png" 
+                            alt="Meow Creative Concepts Logo" 
+                            className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                        />
+                    </motion.div>
+
+                    {/* Brand Name Pill */}
+                    <motion.div
+                        initial={{ y: -100, opacity: 0 }}
+                        animate={{ y: 0, opacity: 1 }}
+                        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.05 }}
+                        className="px-6 py-3 
+                                   bg-white/5 backdrop-blur-2xl saturate-150
+                                   border border-white/10
+                                   rounded-full
+                                   shadow-[0_8px_32px_0_rgba(0,0,0,0.36)]
+                                   text-white relative group overflow-hidden"
+                    >
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 via-transparent to-transparent opacity-50 pointer-events-none" />
+                        <div className="relative z-10 text-sm md:text-base font-bold tracking-widest uppercase bg-gradient-to-r from-white to-white/70 bg-clip-text text-transparent">
+                            Meow Creative Concepts
+                        </div>
+                    </motion.div>
+                </div>
 
                 {/* Right Pill: Navigation */}
                 <motion.div

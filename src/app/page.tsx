@@ -53,9 +53,9 @@ export default function Home() {
         <AboutUs />
 
         {/* Footer */}
-        <footer id="contact" className="py-32 px-4 text-center border-t border-white/10 bg-gradient-to-b from-[#0f0f0f] to-[#050505]">
-          <div className="max-w-3xl mx-auto space-y-12">
-            <h2 className="text-4xl md:text-7xl font-light tracking-tight hover:text-amber-100 transition-colors duration-500 cursor-default">
+        <footer id="contact" className="py-16 md:py-32 px-4 text-center border-t border-white/10 bg-gradient-to-b from-[#0f0f0f] to-[#050505]">
+          <div className="max-w-3xl mx-auto space-y-6 md:space-y-12">
+            <h2 className="text-3xl md:text-7xl font-light tracking-tight hover:text-amber-100 transition-colors duration-500 cursor-default px-2">
               Let’s create something <span className="font-serif italic text-amber-200">amazing</span> together!
             </h2>
 
@@ -84,7 +84,7 @@ export default function Home() {
               </button>
             </div>
 
-            <div className="pt-24 text-white/20 text-xs tracking-widest uppercase">
+            <div className="pt-12 md:pt-24 text-white/20 text-xs tracking-widest uppercase">
               © {new Date().getFullYear()} Meow Creative Concepts
             </div>
           </div>

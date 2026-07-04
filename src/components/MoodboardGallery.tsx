@@ -6,15 +6,15 @@ import { categoryInfo } from "@/data/products";
 
 export default function MoodboardGallery() {
     return (
-        <section id="gallery" className="py-24 bg-[#0a0a0a] min-h-screen">
+        <section id="gallery" className="py-16 md:py-24 bg-[#0a0a0a] min-h-screen">
             <div className="max-w-7xl mx-auto px-4 md:px-8">
 
                 {/* Header */}
-                <div className="mb-16">
+                <div className="mb-10 md:mb-16">
                     <motion.h2
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        className="text-amber-400 text-sm tracking-[0.2em] uppercase mb-2"
+                        className="text-amber-400 text-xs md:text-sm tracking-[0.2em] uppercase mb-2"
                     >
                         The Collection
                     </motion.h2>
@@ -22,14 +22,14 @@ export default function MoodboardGallery() {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: 0.1 }}
-                        className="text-4xl md:text-5xl font-light text-white"
+                        className="text-3xl md:text-5xl font-light text-white"
                     >
                         Curate your <span className="font-serif italic text-white/50">vibe</span>
                     </motion.h3>
                 </div>
 
                 {/* Category Cards */}
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
+                <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-8">
                     {categoryInfo.map((cat, index) => (
                         <Link key={cat.slug} href={`/collection/${cat.slug}`} className="block">
                             <motion.div
@@ -37,7 +37,7 @@ export default function MoodboardGallery() {
                                 whileInView={{ opacity: 1, y: 0 }}
                                 viewport={{ once: true }}
                                 transition={{ duration: 0.5, delay: index * 0.15 }}
-                                className="group relative aspect-[3/4] sm:aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[#0f0f0f] border border-white/5 hover:border-white/20 transition-colors duration-500"
+                                className="group relative aspect-[3/4] md:aspect-[4/5] rounded-xl overflow-hidden cursor-pointer bg-[#0f0f0f] border border-white/5 hover:border-white/20 transition-colors duration-500"
                             >
                                 {/* Background Image */}
                                 <img
@@ -45,36 +45,36 @@ export default function MoodboardGallery() {
                                     alt={cat.name}
                                     loading={index === 0 ? "eager" : "lazy"}
                                     decoding="async"
-                                    sizes="(max-width: 768px) 100vw, 33vw"
+                                    sizes="(max-width: 768px) 50vw, 33vw"
                                     className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-85 group-hover:opacity-100"
                                 />
 
                                 {/* Gradient Overlay */}
-                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent group-hover:from-black/90 transition-all duration-500" />
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-transparent group-hover:from-black/95 transition-all duration-500" />
 
                                 {/* Content Overlay */}
-                                <div className="absolute inset-0 flex flex-col justify-end p-8">
-                                    <p className="text-amber-400 text-xs tracking-[0.2em] uppercase mb-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
+                                <div className="absolute inset-0 flex flex-col justify-end p-4 md:p-8">
+                                    <p className="text-amber-400 text-[10px] md:text-xs tracking-[0.2em] uppercase mb-1 md:mb-2 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300">
                                         Explore
                                     </p>
-                                    <h3 className="text-2xl md:text-4xl font-serif text-white mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
+                                    <h3 className="text-lg md:text-4xl font-serif text-white mb-1 md:mb-3 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-75">
                                         {cat.name}
                                     </h3>
-                                    <p className="text-sm text-white/50 mb-6 transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-100">
+                                    <p className="text-xs md:text-sm text-white/50 mb-3 md:mb-6 line-clamp-2 md:line-clamp-none transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 delay-100">
                                         {cat.description}
                                     </p>
 
                                     {/* Arrow CTA */}
-                                    <div className="flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-150 transform translate-y-4 group-hover:translate-y-0">
-                                        <span className="text-xs text-white/70 uppercase tracking-widest">View Collection</span>
+                                    <div className="flex items-center gap-1 md:gap-2 opacity-0 group-hover:opacity-100 transition-all duration-300 delay-150 transform translate-y-4 group-hover:translate-y-0">
+                                        <span className="text-[9px] md:text-xs text-white/70 uppercase tracking-widest">View Collection</span>
                                         <svg
-                                            width="20"
-                                            height="20"
+                                            width="16"
+                                            height="16"
                                             viewBox="0 0 24 24"
                                             fill="none"
                                             stroke="currentColor"
                                             strokeWidth="1.5"
-                                            className="text-amber-400 transform group-hover:translate-x-1 transition-transform duration-300"
+                                            className="text-amber-400 transform group-hover:translate-x-1 transition-transform duration-300 md:w-5 md:h-5"
                                         >
                                             <path d="M5 12h14M12 5l7 7-7 7" />
                                         </svg>

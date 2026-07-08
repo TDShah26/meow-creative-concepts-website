@@ -5,6 +5,7 @@ import GiftScroll from "@/components/GiftScroll";
 import Navbar from "@/components/Navbar";
 import AboutUs from "@/components/AboutUs";
 import MoodboardGallery from "@/components/MoodboardGallery";
+import Customizations from "@/components/Customizations";
 import Testimonials from "@/components/Testimonials";
 
 export default function Home() {
@@ -45,6 +46,9 @@ export default function Home() {
 
         {/* Selected Works / Gallery */}
         <MoodboardGallery />
+
+        {/* Customizations */}
+        <Customizations />
 
         {/* Testimonials */}
         <Testimonials />

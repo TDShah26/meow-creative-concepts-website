@@ -334,10 +334,37 @@ export default function GiftScroll() {
                     <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        className="absolute bottom-8 left-1/2 -translate-x-1/2 text-white/20 text-xs animate-pulse"
+                        exit={{ opacity: 0, transition: { duration: 0.3 } }}
+                        className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 pointer-events-none"
                     >
-                        Scroll slowly to reveal the magic
+                        {/* Bouncing pill arrow */}
+                        <motion.div
+                            animate={{ y: [0, 8, 0] }}
+                            transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
+                            className="flex items-center justify-center w-10 h-14 rounded-full"
+                            style={{
+                                background: "rgba(255,255,255,0.12)",
+                                backdropFilter: "blur(10px)",
+                                WebkitBackdropFilter: "blur(10px)",
+                                border: "1px solid rgba(255,255,255,0.18)",
+                                boxShadow: "0 4px 24px rgba(0,0,0,0.25)",
+                            }}
+                        >
+                            <svg
+                                width="18"
+                                height="18"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                stroke="currentColor"
+                                strokeWidth="2.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className="text-white"
+                            >
+                                <line x1="12" y1="5" x2="12" y2="19" />
+                                <polyline points="19 12 12 19 5 12" />
+                            </svg>
+                        </motion.div>
                     </motion.div>
                 )}
             </AnimatePresence>
